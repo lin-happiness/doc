@@ -66,7 +66,7 @@ vgextend centos /dev/sda3
 ```
 ##### 2.7#增加逻辑卷 /dev/mapper/centos-root 大小，增加500M
 ```shell
-lvresize -L +500M dev/mapper/centos-root
+lvextend -L +1.9G /dev/mapper/centos-root
 ```
 ##### 2.8重新识别 /dev/mappercentos-root 大小
 ```shell
