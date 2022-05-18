@@ -36,6 +36,7 @@ yum install -y wget
 ```
 ## 4、安装htop iftop iotop lsof
 ```shell
+    yum install -y epel-release
 	yum install -y htop iftop iotop lsof
 ```
 ## 5、安装了unzip
@@ -153,7 +154,10 @@ http://pecl.php.net/package/rar
 ```shell
     php72 -m
 ```
-
+### 处理连接
+```shell
+cp /usr/bin/php72 /usr/bin/php
+```
 ## 二、安装Nginx
 nginx 安装使用编译安装的方式，首先从官网下载安装包，这里选择目前的稳定版1.18。
 
@@ -442,12 +446,12 @@ vi /etc/opt/remi/php72/php-fpm.d/www.conf
 
 ### 完整代码
 ```shell
-    user  www www;
+       user  www www;
     
     worker_processes auto;
     worker_cpu_affinity auto;
     
-    error_log  /home/wwwlogs/nginx_error.log  crit;
+    error_log  /data/wwwlogs/nginx_error.log  crit;
     
     pid        /usr/local/nginx/logs/nginx.pid;
     
@@ -464,8 +468,8 @@ vi /etc/opt/remi/php72/php-fpm.d/www.conf
     
     http
         {
-            include       mime.types;
-            default_type  application/octet-stream;
+        include       mime.types;
+        default_type  application/octet-stream;
     
         server_names_hash_bucket_size 128;
         client_header_buffer_size 32k;
@@ -505,49 +509,74 @@ vi /etc/opt/remi/php72/php-fpm.d/www.conf
         server_tokens off;
         access_log off;
     
-    	server {
-    		listen       80;
-    		server_name  _;
-    		root /home/wwwroot/aitest.sdchedu.cn/public;
+        server {
+                listen       80;
+                server_name  _;
+                root /data/wwwroot/ds/public;
     
-    		add_header Access-Control-Allow-Origin $http_origin;
-    		add_header Access-Control-Allow-Credentials true;
-    		add_header Access-Control-Allow-Methods  GET,POST,PUT,DELETE,OPTIONS,PATCH;
-    		add_header Access-Control-Allow-Headers DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization;
+                add_header Access-Control-Allow-Origin $http_origin;
+                add_header Access-Control-Allow-Credentials true;
+                add_header Access-Control-Allow-Methods  GET,POST,PUT,DELETE,OPTIONS,PATCH;
+                add_header Access-Control-Allow-Headers DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization;
     
-    		location / {
-    		index index.html index.htm index.php default.html default.htm default.php;
-    		#try_files $uri $uri/ /index.php?$query_string;
-    		try_files $uri $uri/ /index.php?$1;
-    		if (!-e $request_filename) {
-    				#一级目录
-    				rewrite ^/index.php(.*)$ /index.php?s=$1 last;
-    				rewrite ^/(.*)$ /index.php?s=/$1 last;
-    			  }
-    		if ($request_method = 'OPTIONS') {
-    				add_header Access-Control-Allow-Origin *;
-    				add_header Access-Control-Allow-Methods GET,POST,PUT,DELETE,OPTIONS,PATCH;
-    				add_header Access-Control-Allow-Credentials true;
-    				add_header Access-Control-Allow-Headers DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization;
-    				return 204;
-    				}
-    		}
+                location / {
+                index index.html index.htm index.php default.html default.htm default.php;
+                #try_files $uri $uri/ /index.php?$query_string;
+                try_files $uri $uri/ /index.php?$1;
+                if (!-e $request_filename) {
+                                #一级目录
+                                rewrite ^/index.php(.*)$ /index.php?s=$1 last;
+                                rewrite ^/(.*)$ /index.php?s=/$1 last;
+                          }
+                if ($request_method = 'OPTIONS') {
+                                add_header Access-Control-Allow-Origin *;
+                                add_header Access-Control-Allow-Methods GET,POST,PUT,DELETE,OPTIONS,PATCH;
+                                add_header Access-Control-Allow-Credentials true;
+                                add_header Access-Control-Allow-Headers DNT,X-Mx-ReqToken,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Authorization;
+                                return 204;
+                                }
+                }
     
-    		error_page   500 502 503 504  /50x.html;
-    		location = /50x.html {
-    			root   html;
-    		}
+                error_page   500 502 503 504  /50x.html;
+                location = /50x.html {
+                        root   html;
+                }
     
-    		# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-    		#
-    		location ~ \.php$ {
-    			fastcgi_pass   127.0.0.1:9000;
-    			fastcgi_index  index.php;
-    			fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-    			include        fastcgi_params;
-    		}
+                # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+                #
+                location ~ \.php$ {
+                        fastcgi_pass   127.0.0.1:9000;
+                        fastcgi_index  index.php;
+                        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+                        include        fastcgi_params;
+                }
     }
+
+
+server {
+    listen 8080;
+    server_name _;
+    root /data/wwwroot/test;
+    index index.php index.html;
+
+    location / {
+        if (!-f $request_filename){
+                rewrite (.*) /index.php;
+        }
     }
+
+    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+    #
+    location ~ \.php$ {
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+    }
+
+}
+
+}
 
 ```
 ## 四、PHP版本更新，7.3.33升级到7.4.27

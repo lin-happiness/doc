@@ -56,7 +56,7 @@ https://github.com/docker/compose/releases
 ```
 下载docker-compose
 ```shell
-curl -L "https://github.com/docker/compose/releases/download/1.28.6/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+curl -L "https://github.com/docker/compose/releases/download/v2.4.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 ```
 修改权限
 ```shell
@@ -300,6 +300,11 @@ OPTIONS说明
 运行（一般将配置文件和数据通过-v参数映射到宿主机）
 ```shell
     sudo docker run -d --name mynginx -p 9292:80 -v /data/mynginx:/data  nginx:latest
+
+
+# 需要提前把配置文件拷贝到宿主机
+    docker run -d --name nginx -p 80:80 -v /data/nginx/conf:/etc/nginx  -v /data/nginx/html:/usr/share/nginx/html  nginx:latest
+    
 ```
 结果
 ```shell
