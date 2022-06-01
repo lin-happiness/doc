@@ -93,6 +93,8 @@ yum install -y wget
 ### 5、然后就是安装PHP和PHP相关的插件。
 ```shell
     yum install php72 php72-php-fpm php72-php-gd php72-php-json php72-php-mbstring php72-php-mysqlnd php72-php-xml php72-php-xmlrpc php72-php-opcache php72-php-bcmath php72-php-zip php72-php-gearman php72-php-redis
+
+    yum install php74 php74-php-fpm php74-php-gd php74-php-json php74-php-mbstring php74-php-mysqlnd php74-php-xml php74-php-xmlrpc php74-php-opcache php74-php-bcmath php74-php-zip php74-php-gearman php74-php-redis
 ```
 增加redis插件
 ```shell
@@ -103,6 +105,7 @@ yum install  php72-php-redis
     service php72-php-fpm start 
     或者
     systemctl start php72-php-fpm.service
+    systemctl start php74-php-fpm.service
 ```
 ### 7、查看启动状态
 ```shell
@@ -115,6 +118,8 @@ yum install  php72-php-redis
 ### 9、设置开启启动
 ```shell
     systemctl enable php72-php-fpm.service
+
+    systemctl enable php74-php-fpm.service
 ```
 ### 10、安装rar扩展
 
