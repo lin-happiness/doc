@@ -106,3 +106,9 @@ nmon –f –r test –s 10 –c 15
 ./nmonchart test.nmon /root/test.html
 
 ```
+
+
+### 5、参考
+https://blog.csdn.net/Mrlijie00/article/details/120046416
+
+https://www.likecs.com/show-28248.html
