@@ -16,8 +16,3 @@
     	a.TABLE_SCHEMA = 'vm' # 这里修改为数据库名
     	# 单表时加上下方条件
     	 AND a.TABLE_NAME like 'vm_%' # 这里修改为表名
-
-
-
-
-

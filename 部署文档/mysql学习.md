@@ -240,3 +240,9 @@ update config_user set nickname="超级管理员" where name='admin';
 ```shell
  ROLLBACK;
 ```
+
+
+
+
+ CREATE DATABASE IF NOT EXISTS banpai DEFAULT CHARACTER SET utf8mb4 DEFAULT COLLATE utf8mb4_general_ci;
+

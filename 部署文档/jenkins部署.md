@@ -41,8 +41,9 @@
 ```
 通过命令修改default.json文件
 ```shell
-	sudo sed -i 's/https:\/\/updates.jenkins.io\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g' default.json
-	sudo sed -i 's/http:\/\/www.google.com/https:\/\/www.baidu.com/g' default.json
+sudo sed -i 's/http:\/\/updates.jenkinsci.org\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g' default.json
+
+sudo sed -i 's/http:\/\/www.google.com/https:\/\/www.baidu.com/g' default.json
 ```
 #### 1.4 重启jenkins服务
 ```shell
@@ -63,7 +64,7 @@
 登录后进入【系统管理】【插件管理】【可选插件】查询local安装对应语言插件，需要选择安装后重启。
 
 #### 1.9 修改密码
-登录后在右上角用户名（使用管理员登录，用户名是admin）下拉中选择【设置】，可以设置密码  chenghai/linlefu  
+登录后在右上角用户名（使用管理员登录，用户名是admin）下拉中选择【设置】，可以设置密码    
 #### 1.10 安装git
 ```shell
     sudo yum install git -y
@@ -101,7 +102,7 @@
 #### 配置jenkins
 配置参考 1.1--1.10
 
-### 4、docker部署(有问题 暂时不建议使用)
+### 4、docker部署
 #### 拉取镜像
 ```shell
     sudo docker pull jenkins/jenkins:lts-centos7
@@ -109,9 +110,6 @@
 #### 创建实例
 ```shell
     sudo docker run -d  --name jenkins --restart=always -u root -p 8080:8080  -v /var/jenkins_home:/var/jenkins_home jenkins/jenkins:lts-centos7
-
-# docker run -d -p 10240:8080 -p 10241:50000 -v /var/jenkins_mount:/var/jenkins_home -v /opt/apache-maven-3.6.3:/usr/local/maven -v /etc/localtime:/etc/localtime --name myjenkins jenkins/jenkins
-
 ```
 注意：启动时候，提示：该jenkins实例似乎已离线，需要修改配置
 
@@ -135,7 +133,7 @@
 ```
 通过命令修改default.json文件
 ```shell
-	sudo sed -i 's/https:\/\/updates.jenkins.io\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g' default.json
+	sudo sed -i 's/http:\/\/updates.jenkinsci.org\/download/https:\/\/mirrors.tuna.tsinghua.edu.cn\/jenkins/g' default.json
 	sudo sed -i 's/http:\/\/www.google.com/https:\/\/www.baidu.com/g' default.json
 ```
 ##### 4.3 重启jenkins(jenkins为docker实例的name ，通过sudo docker ps -a查看)

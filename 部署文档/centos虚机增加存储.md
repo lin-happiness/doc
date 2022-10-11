@@ -64,11 +64,9 @@ pvdisplay
 ```shell
 vgextend centos /dev/sda3
 ```
-##### 2.7#增加逻辑卷 /dev/mapper/centos-root 大小，增加500M（增加全部用剩余使用+100%FREE）
+##### 2.7#增加逻辑卷 /dev/mapper/centos-root 大小，增加500M
 ```shell
-lvextend -L +500M /dev/mapper/centos-root
-
-lvextend -l +100%FREE /dev/mapper/centos-root
+lvresize -L +500M dev/mapper/centos-root
 ```
 ##### 2.8重新识别 /dev/mappercentos-root 大小
 ```shell
